@@ -20,9 +20,6 @@ void	free_philosopher(t_philosopher **philosopher)
 	if ((*philosopher)->r_fork_mutex)
 		(pthread_mutex_destroy((*philosopher)->r_fork_mutex), \
 			free((*philosopher)->r_fork_mutex));
-	if ((*philosopher)->l_fork_mutex)
-		(pthread_mutex_destroy((*philosopher)->l_fork_mutex), \
-			free((*philosopher)->l_fork_mutex));
 	if ((*philosopher)->state_mutex)
 		(pthread_mutex_destroy((*philosopher)->state_mutex), \
 			free((*philosopher)->state_mutex));
@@ -68,7 +65,6 @@ t_philosopher	*new_philosopher(const int id, pthread_mutex_t **mutexes, \
 	philosopher->id = id + 1;
 	philosopher->printf_mutex = mutexes[0];
 	philosopher->r_fork_mutex = NULL;
-	philosopher->l_fork_mutex = NULL;
 	philosopher->meal_count_mutex = NULL;
 	philosopher->state_mutex = NULL;
 	philosopher->last_meal_time_mutex = NULL;

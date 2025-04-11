@@ -38,7 +38,6 @@ typedef struct s_philosopher
 	t_state					last_state;
 	pthread_mutex_t			*printf_mutex;
 	pthread_mutex_t			*r_fork_mutex;
-	pthread_mutex_t			*l_fork_mutex;
 	pthread_mutex_t			*last_meal_time_mutex;
 	pthread_mutex_t			*meal_count_mutex;
 	pthread_mutex_t			*state_mutex;
