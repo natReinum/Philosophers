@@ -15,5 +15,4 @@
 # include "my_threads.h"
 # include "../struct/philosopher_struct.h"
 
-
 #endif // PROCESS_H

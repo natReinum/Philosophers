@@ -6,7 +6,7 @@
 /*   By: nmunier <nmunier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:46:16 by nmunier           #+#    #+#             */
-/*   Updated: 2025/04/14 15:13:48 by nmunier          ###   ########.fr       */
+/*   Updated: 2025/04/22 17:38:31 by nmunier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MY_THREADS_H
 # include <stdio.h>
 # include <fcntl.h>
-#include <signal.h>
+# include <signal.h>
 # include <stddef.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -55,7 +55,7 @@ t_boolean		check_end_condition(t_table *table);
 char			*ft_itoa(int n);
 t_boolean		assign_sem(sem_t **sem, int id, char *str);
 void			unassign_sem(sem_t *sem, int id, char *str);
-void			unlink_sem();
+void			unlink_sem(void);
 void			wait_delay(time_t delay);
 void			exit_child(t_philosopher *philo);
 t_boolean		has_simulation_ended(t_table *table);

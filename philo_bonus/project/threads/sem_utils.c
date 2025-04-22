@@ -6,7 +6,7 @@
 /*   By: nmunier <nmunier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:04:36 by nmunier           #+#    #+#             */
-/*   Updated: 2025/04/14 18:04:36 by nmunier          ###   ########.fr       */
+/*   Updated: 2025/04/18 20:56:41 by nmunier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	unassign_sem(sem_t *sem, int id, char *str)
 	free(sem_name);
 }
 
-void	unlink_sem()
+void	unlink_sem(void)
 {
 	sem_unlink(DEAD_SEMAPHORE);
 	sem_unlink(STOP_SEMAPHORE);

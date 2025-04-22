@@ -6,7 +6,7 @@
 /*   By: nmunier <nmunier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:42:41 by nmunier           #+#    #+#             */
-/*   Updated: 2025/04/11 16:03:20 by nmunier          ###   ########.fr       */
+/*   Updated: 2025/04/22 17:38:36 by nmunier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	free_table(t_table **table)
 {
 	int	i;
-	int max;
+	int	max;
 
 	if (!table || !*table)
 		return ;
@@ -68,7 +68,8 @@ static t_boolean	init_table_sem(t_table *table)
 								SEM_RIGHTS, table->num_of_philosophers);
 	if (table->completed_meals_sem == SEM_FAILED)
 		return (false);
-	table->simulation_stop_sem = sem_open(STOP_SEMAPHORE, O_CREAT, SEM_RIGHTS, 0);
+	table->simulation_stop_sem = sem_open(STOP_SEMAPHORE, O_CREAT, \
+								SEM_RIGHTS, 0);
 	if (table->simulation_stop_sem == SEM_FAILED)
 		return (false);
 	table->printf_sem = sem_open(PRINTF_SEMAPHORE, O_CREAT, SEM_RIGHTS, 1);

@@ -6,7 +6,7 @@
 /*   By: nmunier <nmunier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:40:20 by nmunier           #+#    #+#             */
-/*   Updated: 2025/04/18 15:10:41 by nmunier          ###   ########.fr       */
+/*   Updated: 2025/04/18 20:03:56 by nmunier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	eat(t_philosopher *philo)
 		philo->meal_count += 1;
 	}
 	(release_fork(philo), release_fork(philo), \
-	 	change_state(philo, is_sleeping));
+	change_state(philo, is_sleeping));
 }
 
 void	rest(t_philosopher *philo)

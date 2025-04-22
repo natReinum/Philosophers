@@ -6,7 +6,7 @@
 /*   By: nmunier <nmunier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:47:32 by nmunier           #+#    #+#             */
-/*   Updated: 2025/04/08 17:48:13 by nmunier          ###   ########.fr       */
+/*   Updated: 2025/04/18 17:38:02 by nmunier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_boolean	check_end_condition(t_table *table)
 {
 	int	i;
 	int	alive_philo;
-	int philo_sated;
+	int	philo_sated;
 
 	i = 0;
 	alive_philo = 0;
