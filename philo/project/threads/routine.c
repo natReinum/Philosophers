@@ -51,7 +51,7 @@ void	*routine_reaper(void *table_ptr)
 			pthread_mutex_lock(table->end_simulation_mutex);
 			table->is_simulation_running = false;
 			pthread_mutex_unlock(table->end_simulation_mutex);
-			return (NULL);
+			break ;
 		}
 		usleep(100);
 	}

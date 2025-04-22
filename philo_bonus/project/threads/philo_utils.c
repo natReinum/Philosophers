@@ -6,7 +6,7 @@
 /*   By: nmunier <nmunier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:40:20 by nmunier           #+#    #+#             */
-/*   Updated: 2025/04/11 17:09:06 by nmunier          ###   ########.fr       */
+/*   Updated: 2025/04/18 15:10:41 by nmunier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,27 @@ void	think(t_philosopher *philo)
 {
 	time_t	thinking_time;
 
-	if (get_is_dead(philo) || get_state(philo) != is_thinking \
-		|| has_simulation_ended(philo->table))
+	if (get_is_dead(philo) || get_state(philo) != is_thinking)
 		return ;
-	pthread_mutex_lock(philo->last_meal_time_mutex);
+	sem_wait(philo->state_sem);
 	thinking_time = philo->table->time_to_die \
 					- (get_local_time(philo->table) - philo->last_meal_time) \
 					- philo->table->time_to_eat;
-	pthread_mutex_unlock(philo->last_meal_time_mutex);
+	sem_post(philo->state_sem);
 	thinking_time /= 2;
 	if (thinking_time < 0)
 		thinking_time = 0;
-	pthread_mutex_lock(philo->state_mutex);
-	if (philo->last_state != is_thinking)
-		printf_philosopher(philo, THINKING_MSG, philo->table);
-	pthread_mutex_unlock(philo->state_mutex);
-	ft_sleep(thinking_time, philo->table);
+	printf_philosopher(philo, THINKING_MSG, philo->table);
+	ft_sleep(thinking_time, philo);
 	change_state(philo, is_eating);
 }
 
 void	eat(t_philosopher *philo)
 {
-	if (get_is_dead(philo) || get_state(philo) != is_eating \
-		|| has_simulation_ended(philo->table))
+	if (get_is_dead(philo) || get_state(philo) != is_eating)
 		return ;
 	t_boolean (fork_right) = grab_fork(philo);
-	t_boolean (fork_left) = grab_fork(philo->next_philosopher);
+	t_boolean (fork_left) = grab_fork(philo);
 	if (fork_right)
 		printf_philosopher(philo, FORK_TAKEN_MSG, philo->table);
 	if (fork_left)
@@ -49,25 +44,22 @@ void	eat(t_philosopher *philo)
 	if (fork_right && fork_left)
 	{
 		printf_philosopher(philo, EATING_MSG, philo->table);
-		pthread_mutex_lock(philo->last_meal_time_mutex);
+		sem_wait(philo->state_sem);
 		philo->last_meal_time = get_local_time(philo->table);
-		pthread_mutex_unlock(philo->last_meal_time_mutex);
+		sem_post(philo->state_sem);
 		ft_sleep(min(philo->table->time_to_eat, philo->table->time_to_die), \
-			philo->table);
-		pthread_mutex_lock(philo->meal_count_mutex);
+			philo);
 		philo->meal_count += 1;
-		pthread_mutex_unlock(philo->meal_count_mutex);
 	}
-	(release_fork(philo), release_fork(philo->next_philosopher), \
-		change_state(philo, is_sleeping));
+	(release_fork(philo), release_fork(philo), \
+	 	change_state(philo, is_sleeping));
 }
 
 void	rest(t_philosopher *philo)
 {
-	if (get_is_dead(philo) || get_state(philo) != is_sleeping \
-		|| has_simulation_ended(philo->table))
+	if (get_is_dead(philo) || get_state(philo) != is_sleeping)
 		return ;
 	printf_philosopher(philo, SLEEPING_MSG, philo->table);
-	ft_sleep(philo->table->time_to_sleep, philo->table);
+	ft_sleep(philo->table->time_to_sleep, philo);
 	change_state(philo, is_thinking);
 }

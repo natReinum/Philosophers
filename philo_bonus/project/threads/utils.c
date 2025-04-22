@@ -6,7 +6,7 @@
 /*   By: nmunier <nmunier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 18:24:55 by nmunier           #+#    #+#             */
-/*   Updated: 2025/04/07 18:31:29 by nmunier          ###   ########.fr       */
+/*   Updated: 2025/04/14 17:02:53 by nmunier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	printf_philosopher(t_philosopher *philosopher, \
 							char *str, t_table *table)
 {
-	pthread_mutex_lock(philosopher->printf_mutex);
-	if (has_simulation_ended(table) == false || str[14] == 'd')
+	sem_wait(philosopher->printf_sem);
+	if (!get_is_dead(philosopher))
 		printf(str, get_local_time(table), philosopher->id);
-	pthread_mutex_unlock(philosopher->printf_mutex);
+	sem_post(philosopher->printf_sem);
 }
 
 time_t	get_timestamp(void)
@@ -34,15 +34,15 @@ time_t	get_local_time(t_table *table)
 	return (get_timestamp() - table->start_time);
 }
 
-void	ft_sleep(time_t mili_s, t_table *table)
+void	ft_sleep(time_t mili_s, t_philosopher *philosopher)
 {
 	time_t	end;
 
 	end = get_timestamp() + mili_s;
 	while (get_timestamp() < end)
 	{
-		if (has_simulation_ended(table))
-			break ;
+		if (get_is_dead(philosopher))
+			return ;
 		usleep(100);
 	}
 }
